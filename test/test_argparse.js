@@ -5761,7 +5761,7 @@ VV VV VV
 
     setUp() {
         this.parser = argparse.ArgumentParser({ exit_on_error: false })
-        this.parser.add_argument('--integers', { metavar: 'N', type: 'int' })
+        this.parser.add_argument('--integers', { metavar: 'N', type: 'int', required: true })
     }
 
     test_exit_on_error_with_good_args() {
@@ -5772,6 +5772,12 @@ VV VV VV
     test_exit_on_error_with_bad_args() {
         this.assertRaises(argparse.ArgumentError, () => {
             this.parser.parse_args('--integers a'.split(' '))
+        })
+    }
+
+    test_exit_on_error_with_missing_args() {
+        this.assertRaises(argparse.ArgumentError, () => {
+            this.parser.parse_args([])
         })
     }
 }).run()
